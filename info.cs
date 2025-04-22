@@ -58,8 +58,8 @@ namespace Wpf_Reservoom3
         // erstelle eine Datei namens deploy-class-commands.yml
 
         // Terminal öffnen 
-        // git tag class-commands/v1.0.4-beta
-        // git push origin class-commands/v1.0.4-beta
+        // git tag class-commands/v1.0.6-beta
+        // git push origin class-commands/v1.0.6-beta
         // https://github.com/madeUthink/Wpf_Reservoom3/actions/workflows/main.yml
 
         // git add .
