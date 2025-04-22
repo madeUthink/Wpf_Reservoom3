@@ -26,12 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="LoadingSpinnerControl">
-      <HintPath>..\_MINE_Repo\_WPF_Control_Diverses_Own\Login_Register3\wpf_login_register\Dependencies\LoadingSpinnerControl.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -39,6 +33,13 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="LoadingSpinnerControl">
+      <HintPath>..\_MINE_Repo\_WPF_Control_Diverses_Own\LoadingSpinnerControl\bin\Debug\net8.0-windows\win-x64\LoadingSpinnerControl.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
 
 </Project>
