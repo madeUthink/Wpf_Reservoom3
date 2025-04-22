@@ -20,9 +20,8 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      # Restore the .NET project
-      # Ensure proper restore with the runtime identifier
-      - run: dotnet restore ${{ env.PROJECT_PATH }} 
+      # Step to restore packages including the runtime packs
+      - run: dotnet restore ${{ env.PROJECT_PATH }} -r win-x64 
 
       # Build the project in Release mode
       - run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
