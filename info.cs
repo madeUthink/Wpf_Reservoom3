@@ -57,11 +57,11 @@ namespace Wpf_Reservoom3
         // erstelle eine Datei namens deploy-class-commands.yml
 
         // Terminal öffnen 
-        // git tag class-commands/v1.0.0-beta
-        // git push origin class-commands/v1.0.0-beta
+        // git tag class-commands/v1.0.1-beta
+        // git push origin class-commands/v1.0.1-beta
 
         // git add .
-        // git commit -m "Add release"
+        // git commit -m "Add beta-release"
         // git tag class-commands/v1.0.0
         // git push origin class-commands/v1.0.0
 

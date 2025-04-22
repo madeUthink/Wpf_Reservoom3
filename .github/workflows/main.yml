@@ -6,7 +6,7 @@ on:
       - 'class-commands/v*'
 
 env:
-  PROJECT_PATH: Wpf_Reservoom_3/Wpf_Reservoom3.csproj
+  PROJECT_PATH: Wpf_Reservoom3.csproj
 
 jobs:
   deploy:
