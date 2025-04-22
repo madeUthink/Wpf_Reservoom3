@@ -1,0 +1,31 @@
+﻿<Window x:Class="Wpf_Reservoom3.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_Reservoom3" 
+        xmlns:views="clr-namespace:Wpf_Reservoom3.Views"
+         xmlns:vms="clr-namespace:Wpf_Reservoom3.ViewModels"
+        Title="Reservoom" 
+        Height="450" 
+        Width="800"
+        FontSize="14"
+        mc:Ignorable="d">
+        <Grid Margin="20 10" MaxWidth="600">
+            <Grid.Resources>
+                <DataTemplate DataType="{x:Type vms:MakeReservationViewModel}">
+                    <views:MakeReservationView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vms:ReservationListingViewModel}">
+                    <views:ReservationListingView />
+                </DataTemplate>
+            </Grid.Resources>
+            <!--<views:MakeReservationView />-->
+            <!--<views:ReservationListingView />-->
+            <!--<views:MakeReservationView DataContext="{Binding CurrentViewModel}"/>-->
+            <!--<views:ReservationListingView DataContext="{Binding CurrentViewModel}"/>-->
+
+            <ContentControl Content="{Binding CurrentViewModel}" />
+        </Grid>
+
+</Window>
