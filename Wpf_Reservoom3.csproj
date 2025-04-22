@@ -11,6 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Dependencies\**" />
+    <EmbeddedResource Remove="Dependencies\**" />
+    <None Remove="Dependencies\**" />
+    <Page Remove="Dependencies\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="reservoom.db" />
   </ItemGroup>
 
@@ -37,7 +44,7 @@
 
   <ItemGroup>
     <Reference Include="LoadingSpinnerControl">
-      <HintPath>..\_MINE_Repo\_WPF_Control_Diverses_Own\LoadingSpinnerControl\bin\Debug\net8.0-windows\win-x64\LoadingSpinnerControl.dll</HintPath>
+      <HintPath>Dependencies\LoadingSpinnerControl.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
