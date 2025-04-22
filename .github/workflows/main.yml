@@ -22,7 +22,7 @@ jobs:
 
       # Restore the .NET project
       # Ensure proper restore with the runtime identifier
-      - run: dotnet restore ${{ env.PROJECT_PATH }} --runtime win-x64
+      - run: dotnet restore ${{ env.PROJECT_PATH }} 
 
       # Build the project in Release mode
       - run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore

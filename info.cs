@@ -49,17 +49,18 @@ namespace Wpf_Reservoom3
         // https://www.youtube.com/watch?v=cUrrdAVmo4I
         // https://github.com/SingletonSean/wpf-tutorials/blob/master/.github/workflows/deploy-class-commands.yml
 
-        // open Terminal => select "Project solution(mappe) => "In Terminal öffnen"
-        // PS...dotnet publish -c Release --self-contained -p:PublishSingleFile=true
-
         // Wechsle von Projektansicht zu Ordneransicht
         // erstelle ein Ordner namens .github
         // darunter erstelle ein Ordner namens workflows
         // erstelle eine Datei namens deploy-class-commands.yml
 
+        // open Terminal => select "Project solution(mappe) => "In Terminal öffnen"
+        // PS...dotnet publish -c Release --self-contained -p:PublishSingleFile=true
+        // dotnet publish -c Release --self-contained -r win-x64 -p:PublishSingleFile=true
+
         // Terminal öffnen 
-        // git tag class-commands/v1.0.6-beta
-        // git push origin class-commands/v1.0.6-beta
+        // git tag class-commands/v1.0.7-beta
+        // git push origin class-commands/v1.0.7-beta
         // https://github.com/madeUthink/Wpf_Reservoom3/actions/workflows/main.yml
 
         // git add .
