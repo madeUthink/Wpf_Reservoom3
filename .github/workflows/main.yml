@@ -53,22 +53,23 @@ jobs:
           pattern: ${{ env.PUBLISH_PATH }}/*.*
           release-url: ${{ steps.create_release.outputs.upload_url }}
 
-	# Delete source code zip or tar.gz from release
-	- name: Delete source code zip or tar.gz from release
-  	run: |
-    	  release_id=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
-          "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ github.ref }}" | jq -r '.id')
+      # Delete source code zip or tar.gz from release
+      - name: Delete source code zip or tar.gz from release
+      run: |
+        release_id=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
+        "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ github.ref }}" | jq -r '.id')
 
-    	# Get the list of assets for the release
-    	assets=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
-      	  "https://api.github.com/repos/${{ github.repository }}/releases/$release_id/assets")
+      # Get the list of assets for the release
+      assets=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
+      	"https://api.github.com/repos/${{ github.repository }}/releases/$release_id/assets")
 
-    	# Find the source code zip or tar.gz and delete it
-    	source_code_zip_url=$(echo $assets | jq -r '.[] | select(.name | test("source|.tar.gz")) | .url')
+      # Find the source code zip or tar.gz and delete it
+      source_code_zip_url=$(echo $assets | jq -r '.[] | select(.name | test("source|.tar.gz")) | .url')
 
-    	if [ "$source_code_zip_url" != "null" ]; then
-      	  curl -X DELETE -H "Authorization: token ${{ secrets.GH_PAT }}" \
-            "$source_code_zip_url"
-    	fi
-  	env:
-    	  GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+      if [ "$source_code_zip_url" != "null" ]; then
+      	curl -X DELETE -H "Authorization: token ${{ secrets.GH_PAT }}" \
+          "$source_code_zip_url"
+      fi
+
+      env:
+       GITHUB_TOKEN: ${{ secrets.GH_PAT }}
