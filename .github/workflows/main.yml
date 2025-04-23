@@ -36,7 +36,6 @@ jobs:
 
       - name: List published files
         run: dir ${{ env.PUBLISH_PATH }}
-        working-directory: Wpf_Reservoom_3
 
       - name: Create GitHub Release
         uses: actions/create-release@v1
