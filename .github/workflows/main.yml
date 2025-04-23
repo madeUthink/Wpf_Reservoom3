@@ -53,23 +53,24 @@ jobs:
           pattern: ${{ env.PUBLISH_PATH }}/*.*
           release-url: ${{ steps.create_release.outputs.upload_url }}
 
-      # Delete source code zip or tar.gz from release
       - name: Delete source code zip or tar.gz from release
-      run: |
-        release_id=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
-        "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ github.ref }}" | jq -r '.id')
+        run: |
+          # Install jq (JSON processor)
+          choco install jq
 
-      # Get the list of assets for the release
-      assets=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
-      	"https://api.github.com/repos/${{ github.repository }}/releases/$release_id/assets")
+          # Fetch release ID using GitHub API
+          release_id=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
+            "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ github.ref }}" | jq -r '.id')
 
-      # Find the source code zip or tar.gz and delete it
-      source_code_zip_url=$(echo $assets | jq -r '.[] | select(.name | test("source|.tar.gz")) | .url')
+          # Fetch the assets associated with the release
+          assets=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
+            "https://api.github.com/repos/${{ github.repository }}/releases/$release_id/assets")
 
-      if [ "$source_code_zip_url" != "null" ]; then
-      	curl -X DELETE -H "Authorization: token ${{ secrets.GH_PAT }}" \
-          "$source_code_zip_url"
-      fi
+          # Find the source code zip or tar.gz file URL and delete it
+          source_code_zip_url=$(echo $assets | jq -r '.[] | select(.name | test("source|.tar.gz")) | .url')
 
-      env:
-       GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          # If a source code zip or tar.gz is found, delete it
+          if [ "$source_code_zip_url" != "null" ]; then
+            curl -X DELETE -H "Authorization: token ${{ secrets.GH_PAT }}" \
+              "$source_code_zip_url"
+          fi
