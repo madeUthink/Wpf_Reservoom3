@@ -55,16 +55,17 @@ jobs:
 
       - name: Delete source code zip or tar.gz from release
         run: |
-          # Install jq (JSON processor)
-          choco install jq -y
-
           # Fetch release ID using GitHub API
           $release_id = curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" `
             "https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ github.ref }}" | jq -r '.id'
+          
+          echo "Release ID: $release_id"
 
           # Fetch the assets associated with the release
           $assets = curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" `
             "https://api.github.com/repos/${{ github.repository }}/releases/$release_id/assets"
+          
+          echo "Assets: $assets"
 
           # Find the source code zip or tar.gz file URL
           $source_code_zip_url = $assets | jq -r '.[] | select(.name | test("source|.tar.gz")) | .url'
