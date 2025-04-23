@@ -8,28 +8,29 @@ on:
       - 'class-commands/v*'  # This ensures the workflow triggers only on specific tags
 
 env:
-  PROJECT_PATH: ../../Wpf_Reservoom_3/Wpf_Reservoom3.csproj
+  PROJECT_PATH: Wpf_Reservoom3.csproj
 
 jobs:
   deploy:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          path: Wpf_Reservoom_3
 
       - uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 8.0.x
 
-      # Step to restore packages including the runtime packs
-      - run: dotnet restore ${{ env.PROJECT_PATH }} -r win-x64 
+      - run: dotnet restore ${{ env.PROJECT_PATH }} -r win-x64
+        working-directory: Wpf_Reservoom_3
 
-      # Publish the project in Release mode with self-contained runtime for win-x64
-      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained -r win-x64 -p:PublishSingleFile=true
+      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained -r win-x64 -p:PublishSingleFile=true 
+        working-directory: Wpf_Reservoom_3
 
-      # Check if the files are published correctly
-      - run: dir Wpf_Reservoom_3/bin/Release/net8.0-windows/win-x64/publish/
+      - run: dir bin/Release/net8.0-windows/win-x64/publish/
+        working-directory: Wpf_Reservoom_3
 
-      # Create the release on GitHub
       - uses: actions/create-release@v1
         id: create_release
         env:
@@ -38,9 +39,8 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
 
-      # Upload the publish output as a release asset
       - uses: csexton/release-asset-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          pattern: Wpf_Reservoom_3/bin/Release/net8.0-windows/win-x64/publish/*.*  # Ensure this path matches the publish directory
+          pattern: Wpf_Reservoom_3/bin/Release/net8.0-windows/win-x64/publish/*.*
           release-url: ${{ steps.create_release.outputs.upload_url }}
