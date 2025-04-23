@@ -71,10 +71,16 @@ jobs:
               # Get the list of assets for the release
               $assets = curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" "https://api.github.com/repos/${{ github.repository }}/releases/$release_id/assets"
 
+              # Debug output: Check the returned assets
+              Write-Host "Assets found: $assets"
+
               # Find the source code zip or tar.gz and delete it
               $source_code_zip_url = $assets | jq -r '.[] | select(.name | test("source|.tar.gz")) | .url'
               
-              if ($source_code_zip_url -ne "null") {
+              Write-Host "Source code zip/tar.gz URL: $source_code_zip_url"
+              
+              # Ensure the URL is not empty before attempting to delete
+              if ($source_code_zip_url -ne "null" -and $source_code_zip_url) {
                   Write-Host "Deleting source code asset: $source_code_zip_url"
                   curl -X DELETE -H "Authorization: token ${{ secrets.GH_PAT }}" $source_code_zip_url
               } else {
