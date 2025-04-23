@@ -46,14 +46,39 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
 
-     - name: Delete source code zip or tar.gz from release
-     run: |
-     # Ensure the tag is correctly formatted
-     tag_name=${{ github.ref }}
-     release_tag="${tag_name/refs\/tags\//}"
+      - name: Upload release assets
+        uses: csexton/release-asset-action@v2
+        with:
+          github-token: ${{ secrets.GH_PAT }}
+          pattern: ${{ env.PUBLISH_PATH }}/*.*
+          release-url: ${{ steps.create_release.outputs.upload_url }}
 
-     # Fetch release ID using GitHub API
-     release_id=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
-       "https://api.github.com/repos/${{ github.repository }}/releases/tags/$release_tag" | jq -r '.id')
+      - name: Delete source code zip or tar.gz from release
+        run: |
+          # Ensure the tag is correctly formatted
+          tag_name=${{ github.ref }}
+          release_tag="${tag_name/refs\/tags\//}"
 
-     echo "Release ID: $release_id"
+          # Fetch release ID using GitHub API
+          release_id=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
+            "https://api.github.com/repos/${{ github.repository }}/releases/tags/$release_tag" | jq -r '.id')
+
+          echo "Release ID: $release_id"
+          
+          # If a valid release ID is returned, proceed to delete the source code zip/tar.gz files
+          if [ "$release_id" != "null" ]; then
+            # Get the list of assets for the release
+            assets=$(curl -s -H "Authorization: token ${{ secrets.GH_PAT }}" \
+              "https://api.github.com/repos/${{ github.repository }}/releases/$release_id/assets")
+
+            # Find the source code zip or tar.gz and delete it
+            source_code_zip_url=$(echo $assets | jq -r '.[] | select(.name | test("source|.tar.gz")) | .url')
+
+            if [ "$source_code_zip_url" != "null" ]; then
+              echo "Deleting source code zip or tar.gz: $source_code_zip_url"
+              curl -X DELETE -H "Authorization: token ${{ secrets.GH_PAT }}" \
+                "$source_code_zip_url"
+            fi
+          else
+            echo "No release found for the given tag."
+          fi
