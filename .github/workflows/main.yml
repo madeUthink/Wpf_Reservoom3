@@ -71,6 +71,5 @@ jobs:
 
           # If a source code zip or tar.gz is found, delete it
           if ($source_code_zip_url -ne "null") {
-            curl -X DELETE -H "Authorization: token ${{ secrets.GH_PAT }}" \
-              $source_code_zip_url
+             curl -X DELETE -H "Authorization: token ${{ secrets.GH_PAT }}" $source_code_zip_url
           }

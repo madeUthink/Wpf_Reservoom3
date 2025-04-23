@@ -59,8 +59,8 @@ namespace Wpf_Reservoom3
         // dotnet publish -c Release --self-contained -r win-x64 -p:PublishSingleFile=true
 
         // Terminal öffnen 
-        // git tag class-commands/v1.0.20-beta
-        // git push origin class-commands/v1.0.20-beta
+        // git tag class-commands/v1.0.21-beta
+        // git push origin class-commands/v1.0.21-beta
         // https://github.com/madeUthink/Wpf_Reservoom3/actions/workflows/main.yml
         // https://github.com/madeUthink/Wpf_Reservoom3/actions/runs/14603618591/job/40967492721
 
