@@ -70,7 +70,6 @@ jobs:
           source_code_zip_url=$(echo $assets | jq -r '.[] | select(.name | test("source|.tar.gz")) | .url')
 
           # If a source code zip or tar.gz is found, delete it
-          # Check if URL is not null and delete it if found
           if ($source_code_zip_url -ne "null") {
             curl -X DELETE -H "Authorization: token ${{ secrets.GH_PAT }}" \
               $source_code_zip_url
