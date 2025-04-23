@@ -8,7 +8,7 @@ on:
       - 'class-commands/v*'  # This ensures the workflow triggers only on specific tags
 
 env:
-  PROJECT_PATH: Wpf_Reservoom3.csproj
+  PROJECT_PATH: ../../Wpf_Reservoom_3/Wpf_Reservoom3.csproj
 
 jobs:
   deploy:
@@ -23,14 +23,11 @@ jobs:
       # Step to restore packages including the runtime packs
       - run: dotnet restore ${{ env.PROJECT_PATH }} -r win-x64 
 
-      # Build the project in Release mode
-      - run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
-
       # Publish the project in Release mode with self-contained runtime for win-x64
       - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained -r win-x64 -p:PublishSingleFile=true
 
       # Check if the files are published correctly
-      - run: dir Wpf_Reservoom3/bin/Release/net8.0-windows/win-x64/publish/
+      - run: dir Wpf_Reservoom_3/bin/Release/net8.0-windows/win-x64/publish/
 
       # Create the release on GitHub
       - uses: actions/create-release@v1
